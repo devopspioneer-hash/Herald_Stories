@@ -1,0 +1,44 @@
+# Shared ruff config for all Python services (lint + format).
+# Run from repo root: `ruff check .` and `ruff format .`
+
+target-version = "py312"
+line-length = 100
+extend-exclude = [
+    "**/migrations/*",
+    "frontend",
+    "infra",
+]
+
+[lint]
+select = [
+    "E", "W",  # pycodestyle
+    "F",       # pyflakes
+    "I",       # isort
+    "N",       # pep8-naming
+    "UP",      # pyupgrade
+    "B",       # bugbear
+    "S",       # bandit (security)
+    "DJ",      # django
+    "C4",      # comprehensions
+    "SIM",     # simplify
+    "RET",     # return
+    "PT",      # pytest style
+    "T20",     # no print()
+    "RUF",     # ruff-specific
+]
+ignore = [
+    "E501",    # line length handled by the formatter
+    "RUF012",  # mutable class attrs — false positives on Django Meta / DRF classes
+]
+
+[lint.per-file-ignores]
+"**/tests/**" = ["S101", "S105", "S106"]  # assert + hard-coded test passwords
+"**/settings*.py" = ["F405", "F403"]
+
+[lint.isort]
+known-first-party = ["config", "apps", "common"]
+
+[format]
+quote-style = "double"
+indent-style = "space"
+docstring-code-format = true

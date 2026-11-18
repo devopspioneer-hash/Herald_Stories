@@ -1,0 +1,6 @@
+dist
+coverage
+node_modules
+src/api/types
+package-lock.json
+pnpm-lock.yaml
